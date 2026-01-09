@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Sections : EventListener
 {
+    private Animator anim;
+
+    private void Awake()
+    {
+            anim = GetComponent<Animator>();
+    }
+
     public void EnableNextSlide(int index)
     {
         if (slides == null || slides.Length == 0)
@@ -45,5 +52,22 @@ public class Sections : EventListener
         slides[0].SetActive(true);
 
         GameManager.Instance.EnableARCamera();
+    }
+
+    public void PlayAnimation()
+    {
+        StartCoroutine(NoteAnimation());
+    }
+
+    IEnumerator NoteAnimation()
+    {
+        yield return new WaitForSeconds(1.5f);
+        anim.SetTrigger("PlayAnim");
+    }
+
+    public void OnAnimationComplete()
+    {
+        EnableNextSlide(1);
+        anim.SetTrigger("PlayIdle");
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation; 
 using UnityEngine.XR.ARSubsystems; 
 using System.Collections.Generic;
+using System.Collections;
 
 public class MarkerActionInvoker : MonoBehaviour
 {
@@ -51,6 +52,11 @@ public class MarkerActionInvoker : MonoBehaviour
         {
             GameManager.Instance.DisableAR();
             MenuManager.Instance.ChangeMenu(menu);
+
+            // Get the active section
+            Sections section = MenuManager.Instance.GetMenu<Sections>(menu);
+            if (section != null)  
+                section.PlayAnimation();
         }
-    }
+    }    
 }

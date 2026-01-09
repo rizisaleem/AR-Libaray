@@ -17,7 +17,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private List<EventListener> eventListeners = new List<EventListener>();
     [SerializeField] private List<View> views = new List<View>();
 
-    private Menu currentMenu;
+    public Menu currentMenu;
     private Menu prevMenu;
 
     public enum Menu
