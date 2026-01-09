@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static MenuManager;
 
 public class Sections : EventListener
 {
     private Animator anim;
+    private bool coolDown = true;
 
     private void Awake()
     {
@@ -25,6 +28,22 @@ public class Sections : EventListener
             return;
         }
 
+        if (!coolDown) return;
+        coolDown = false;
+        StartCoroutine(EnableCoolDown());
+
+        AudioManager.Instance.PlaySound("Click");
+        EnableNext(index);
+    }
+
+    IEnumerator EnableCoolDown()
+    {
+        yield return new WaitForSeconds(2f);
+        coolDown = true;
+    }
+
+    public void EnableNext(int index)
+    {
         // Disable all slides
         for (int i = 0; i < slides.Length; i++)
         {
@@ -48,10 +67,15 @@ public class Sections : EventListener
             return;
         }
 
+        if (!coolDown) return;
+
+        AudioManager.Instance.PlaySound("Click");
+
         slides[index].SetActive(false);
         slides[0].SetActive(true);
 
-        GameManager.Instance.EnableARCamera();
+        AudioManager.Instance.TurnMusicOnOff(false);
+        ARCameraManager.Instance.EnableARCamera();
     }
 
     public void PlayAnimation()
@@ -65,9 +89,13 @@ public class Sections : EventListener
         anim.SetTrigger("PlayAnim");
     }
 
+    public void EnableEyeShutView()
+    {
+        MenuManager.Instance.EnableView(ViewType.Eyeshut, true);
+    }
+
     public void OnAnimationComplete()
     {
-        EnableNextSlide(1);
         anim.SetTrigger("PlayIdle");
     }
 }

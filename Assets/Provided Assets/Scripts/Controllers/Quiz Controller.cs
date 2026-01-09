@@ -19,6 +19,7 @@ public class QuizController : MonoBehaviour
     public void CorrectAnswer(int index)
     {
         if (isAnimating) return;
+        AudioManager.Instance.PlaySound("Click");
         isAnimating = true;
 
         StartCoroutine(CorrectAnswerSpriteChange(index));   
@@ -44,13 +45,13 @@ public class QuizController : MonoBehaviour
             isAnimating = false;
 
             if (currentMenu == Menu.Section3)
-                section.EnableNextSlide(5);
+                section.EnableNext(5);
             if (currentMenu == Menu.Section4)
-                section.EnableNextSlide(4);
+                section.EnableNext(4);
             if (currentMenu == Menu.Section5)
-                section.EnableNextSlide(5);
+                section.EnableNext(5);
             if (currentMenu == Menu.Section6)
-                section.EnableNextSlide(6);
+                section.EnableNext(6);
 
             for (int i = 0; i < options.Length; i++)
             {
@@ -62,6 +63,7 @@ public class QuizController : MonoBehaviour
     public void WrongAnswer(int index)
     {
         if (isAnimating) return;
+        AudioManager.Instance.PlaySound("Click");
         isAnimating = true;
 
         StartCoroutine(WringAnswerSpriteChange(index));
