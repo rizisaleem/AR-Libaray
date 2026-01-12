@@ -50,9 +50,7 @@ public class MarkerActionInvoker : MonoBehaviour
 
         if (markerLookup.TryGetValue(markerName, out var menu))
         {
-            ARCameraManager.Instance.DisableAR();
-            AudioManager.Instance.TurnMusicOnOff(true);
-            MenuManager.Instance.ChangeMenu(menu);
+            ARCameraManager.Instance.DisableAR(menu);
 
             // Get the active section
             Sections section = MenuManager.Instance.GetMenu<Sections>(menu);

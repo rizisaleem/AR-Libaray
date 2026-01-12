@@ -74,7 +74,6 @@ public class Sections : EventListener
         slides[index].SetActive(false);
         slides[0].SetActive(true);
 
-        AudioManager.Instance.TurnMusicOnOff(false);
         ARCameraManager.Instance.EnableARCamera();
     }
 

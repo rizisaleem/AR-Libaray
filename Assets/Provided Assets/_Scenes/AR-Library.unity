@@ -16800,6 +16800,8 @@ MonoBehaviour:
   arSession: {fileID: 1167446572}
   imageManager: {fileID: 2512387470422636670}
   cameraBg: {fileID: 2512387468973847772}
+  modelPrefab: {fileID: 919132149155446097, guid: f94d40f06b329e94da9a894617814eb7, type: 3}
+  arCamera: {fileID: 2512387468973847774}
 --- !u!1 &778974239
 GameObject:
   m_ObjectHideFlags: 0
@@ -36687,6 +36689,7 @@ GameObject:
   - component: {fileID: 1762441442}
   - component: {fileID: 1762441444}
   - component: {fileID: 1762441443}
+  - component: {fileID: 1762441445}
   m_Layer: 5
   m_Name: Camera Image
   m_TagString: Untagged
@@ -36752,6 +36755,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1762441441}
   m_CullTransparentMesh: 1
+--- !u!114 &1762441445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762441441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1762441443}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 776660188}
+        m_TargetAssemblyTypeName: ARCameraManager, Assembly-CSharp
+        m_MethodName: Enable3DModel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1765540924 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6605111590819766859, guid: 5bdc12db3e9828c4887774a23a37fd8d, type: 3}
@@ -44453,15 +44512,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageManager: {fileID: 2512387470422636670}
   markerActions:
-  - markerName: Marker1
+  - markerName: Marker 1
     menuToEnable: 1
-  - markerName: Marker2
+  - markerName: Marker 2
     menuToEnable: 2
-  - markerName: Marker3
+  - markerName: Marker 3
     menuToEnable: 3
-  - markerName: Marker4
+  - markerName: Marker 4
     menuToEnable: 4
-  - markerName: Marker5
+  - markerName: Marker 5
     menuToEnable: 5
 --- !u!4 &2512387470860572925
 Transform:
