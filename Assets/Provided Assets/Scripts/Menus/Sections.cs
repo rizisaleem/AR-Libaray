@@ -7,6 +7,7 @@ using static MenuManager;
 public class Sections : EventListener
 {
     private Animator anim;
+    private int currentSlide;
     private bool coolDown = true;
 
     private void Awake()
@@ -44,13 +45,14 @@ public class Sections : EventListener
 
     public void EnableNext(int index)
     {
-        // Disable all slides
-        for (int i = 0; i < slides.Length; i++)
-        {
-            slides[i].SetActive(false);
-        }
-
+        currentSlide = index;
+        slides[index - 1].SetActive(false);
         slides[index].SetActive(true);
+    }
+
+    public int getSlideIndex()
+    {
+        return currentSlide;
     }
 
     public void LastSlide(int index)
@@ -71,6 +73,7 @@ public class Sections : EventListener
 
         AudioManager.Instance.PlaySound("Click");
 
+        currentSlide = 0;
         slides[index].SetActive(false);
         slides[0].SetActive(true);
 

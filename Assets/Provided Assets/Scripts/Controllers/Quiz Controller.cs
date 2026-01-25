@@ -19,7 +19,7 @@ public class QuizController : MonoBehaviour
     public void CorrectAnswer(int index)
     {
         if (isAnimating) return;
-        AudioManager.Instance.PlaySound("Click");
+        AudioManager.Instance.PlaySound("Correct");
         isAnimating = true;
 
         StartCoroutine(CorrectAnswerSpriteChange(index));   
@@ -63,7 +63,7 @@ public class QuizController : MonoBehaviour
     public void WrongAnswer(int index)
     {
         if (isAnimating) return;
-        AudioManager.Instance.PlaySound("Click");
+        AudioManager.Instance.PlaySound("Wrong");
         isAnimating = true;
 
         StartCoroutine(WringAnswerSpriteChange(index));

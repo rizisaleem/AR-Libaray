@@ -33,7 +33,8 @@ public class MenuManager : MonoBehaviour
 
     public enum ViewType
     {
-        Eyeshut
+        Eyeshut,
+        TestView
     }
 
     private void Awake()

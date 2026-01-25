@@ -9,7 +9,12 @@ public class EyeshutView : View
     {
         Sections section = MenuManager.Instance.GetMenu<Sections>(MenuManager.Instance.currentMenu);
         if (section != null)
-            section.EnableNext(1);
+        {
+            int index = section.getSlideIndex() + 1;
+            section.EnableNext(index);
+            if(index == 1)
+                section.GetComponent<Animator>().Play("BookAnim");
+        }
     }
 
     public void OnAnimationComplete()

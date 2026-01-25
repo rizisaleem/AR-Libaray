@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using static MenuManager;
@@ -8,13 +9,12 @@ public class ARCameraManager : MonoBehaviour
 {
     public static ARCameraManager Instance;
 
+    [SerializeField] private bool isDebugMode;
+    private int count;
+
     public ARSession arSession;
     public ARTrackedImageManager imageManager;
     public ARCameraBackground cameraBg;
-
-    public GameObject modelPrefab;
-    private GameObject spawnedModel;
-    public Transform arCamera;
 
     private void Awake()
     {
@@ -26,6 +26,7 @@ public class ARCameraManager : MonoBehaviour
 
     void Start()
     {
+        count = 1;
         arSession.enabled = true;     // start AR early
         imageManager.enabled = false; // don't track yet
         cameraBg.enabled = false;     // hide camera
@@ -33,18 +34,23 @@ public class ARCameraManager : MonoBehaviour
 
     public void EnableARCamera()
     {
-        AudioManager.Instance.TurnMusicOnOff(false);
         MenuManager.Instance.ChangeMenu(MenuManager.Menu.None);
+
+        if (isDebugMode)
+            MenuManager.Instance.EnableView(ViewType.TestView, true);
+
+        StartCoroutine(EnableARDelayed());
         EnableAR();
     }
 
     public void EnableAR()
     {
+        AudioManager.Instance.TurnMusicOnOff(false);
+
         if (!arSession.enabled)
             arSession.enabled = true;
 
         cameraBg.enabled = true;
-        StartCoroutine(EnableARDelayed());
     }
 
     IEnumerator EnableARDelayed()
@@ -52,42 +58,40 @@ public class ARCameraManager : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         imageManager.enabled = true;
     }
-    public void DisableAR(Menu menu)
+
+    public void DisableAR(MenuManager.Menu menu)
+    {
+        MenuManager.Instance.ChangeMenu(menu);
+        DisableARCamera();
+    }
+
+    public void DisableARCamera()
     {
         AudioManager.Instance.TurnMusicOnOff(true);
-        MenuManager.Instance.ChangeMenu(menu);
-
         imageManager.enabled = false;
         cameraBg.enabled = false;
     }
 
-    public void Enable3DModel()
+    public void EnableTestView()
     {
-        EnableARCamera();
-        imageManager.enabled = false;
+        var menus = (MenuManager.Menu[])System.Enum.GetValues(typeof(MenuManager.Menu));
 
-        if (spawnedModel == null)
-            spawnedModel = Instantiate(modelPrefab);
+        // Skip None
+        int validMenuCount = menus.Length - 1;
 
-        // Place model 1 meter in front of camera
-        spawnedModel.transform.position =
-            arCamera.position + arCamera.forward * 1.0f;
+        // Reset if overflow
+        if (count >= validMenuCount)
+            count = 0;
 
-        spawnedModel.transform.rotation =
-            Quaternion.LookRotation(arCamera.forward);
+        MenuManager.Menu nextMenu = menus[count];
+        DisableAR(nextMenu);
 
-        spawnedModel.SetActive(true);
+        count++;
+        MenuManager.Instance.EnableView(ViewType.TestView, false);
 
-        StartCoroutine(Disable3DModel());
-    }
-
-    IEnumerator Disable3DModel()
-    {
-        yield return new WaitForSeconds(30f);
-
-        if (spawnedModel != null)
-            spawnedModel.SetActive(false);
-
-        DisableAR(MenuManager.Menu.Section2);
+        // Get the active section
+        Sections section = MenuManager.Instance.GetMenu<Sections>(MenuManager.Instance.currentMenu);
+        if (section != null && section.MenuType != MenuManager.Menu.Section1)
+            section.PlayAnimation();
     }
 }
